@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content">
-
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/select_row_title"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="start"
-              android:textColor="@color/text_black"
-              android:textSize="16sp"
-              android:padding="16dp"
+              android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/select_row_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_location_city_black_24dp"
+        android:tint="@color/colorPrimaryDark"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
         />
-    
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/select_row_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:textColor="@color/text_black"
+        android:textSize="16sp"
+        android:padding="16dp"
+        tools:text="Test Long Long Title"/>
+
+</LinearLayout>
