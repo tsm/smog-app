@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.tomszom.smogapp.R
 import com.tomszom.smogapp.model.Station
 import com.tomszom.smogapp.utils.gone
@@ -11,11 +12,11 @@ import com.tomszom.smogapp.utils.visible
 import kotlinx.android.synthetic.main.select_activity.*
 
 
-class SelectActivity : AppCompatActivity(), SelectContract.View {
+class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.SelectClickListener {
 
     private val presenter: SelectContract.Presenter = SelectPresenter() //TODO inject
 
-    private val selectAdapter = SelectAdapter()
+    private val selectAdapter = SelectAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +75,12 @@ class SelectActivity : AppCompatActivity(), SelectContract.View {
         }
     }
 
+    override fun selectionItemClicked(id: Long) {
+        startStationActivity(id)
+    }
+
     override fun startStationActivity(stationId: Long) {
+        Toast.makeText(this, "station id clicked $stationId", Toast.LENGTH_SHORT).show()
         //TODO add StationActivity
     }
 }
