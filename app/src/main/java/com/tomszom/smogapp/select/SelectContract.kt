@@ -19,7 +19,7 @@ interface SelectContract {
     interface Presenter {
         fun attach(view: View)
         fun detach()
-        fun refresh()
+        fun refresh(showProgress: Boolean)
     }
 
     interface Provider {

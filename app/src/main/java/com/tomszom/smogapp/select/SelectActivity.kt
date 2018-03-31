@@ -23,7 +23,13 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
         setContentView(R.layout.select_activity)
         presenter.attach(this)
 
+        initRefreshLayout()
         initRecycler()
+    }
+
+    private fun initRefreshLayout() {
+        select_refresh.setOnRefreshListener { presenter.refresh(false) }
+        select_refresh.isRefreshing = false
     }
 
     private fun initRecycler() {
@@ -52,6 +58,7 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
     }
 
     override fun showError() {
+        select_refresh.isRefreshing = false
         showMsg(R.string.common_error_try_later)
     }
 
@@ -63,6 +70,7 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
     }
 
     override fun showSelectionList(selectionList: List<Station>) {
+        select_refresh.isRefreshing = false
         if (selectionList.isEmpty()) {
             showNoData()
         } else {

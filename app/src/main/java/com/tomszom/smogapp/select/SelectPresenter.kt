@@ -12,7 +12,7 @@ class SelectPresenter : SelectContract.Presenter {
 
     override fun attach(view: SelectContract.View) {
         this.view = view
-        refresh()
+        refresh(true)
 
     }
 
@@ -20,10 +20,10 @@ class SelectPresenter : SelectContract.Presenter {
         view = null
     }
 
-    override fun refresh() {
+    override fun refresh(showProgress: Boolean) {
         provider.getStations()
                 .applySchedulers()
-                .doOnSubscribe { view?.showLoading() }
+                .doOnSubscribe { if (showProgress) view?.showLoading() }
                 .subscribe(
                         { list ->
                             view?.showSelectionList(list)
