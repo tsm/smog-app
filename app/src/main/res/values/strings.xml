@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SmogApp</string>
+
+    <!-- COMMON -->
+    <string name="common_no_data">No data available</string>
+    <string name="common_error_try_later">An error occurred,\nplease try again later</string>
 </resources>
