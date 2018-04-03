@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.util.DisplayMetrics
 import android.view.MenuItem
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.tomszom.smogapp.R
 import com.tomszom.smogapp.city.measure.MeasureAdapter
 import com.tomszom.smogapp.city.measure.MeasureViewModel
@@ -72,6 +75,18 @@ class CityActivity : AppCompatActivity(), CityContract.View {
 
     private fun showStationInfo(station: Station) {
         supportActionBar?.title = station.stationName
+
+        val metrics = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(metrics)
+
+        val height = metrics.heightPixels
+        val width = metrics.widthPixels
+        val mapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=${station.gegrLat},${station.gegrLon}&zoom=15&size=${width / 2}x${height / 2}&scale=2&maptype=terrain&key=AIzaSyCZpffqEFpAHKpIBDGegcpG-TeIrEh9OZY"
+        Glide.with(this)
+                .load(mapUrl)
+                .apply(RequestOptions().centerCrop())
+                .into(city_map_bg)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
