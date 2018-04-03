@@ -17,8 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="PM10"
-        android:lines="2"
-        android:maxLines="2"
         android:ellipsize="end"
         android:textColor="@color/text_white"
         android:textSize="16sp"
@@ -28,11 +26,22 @@
         android:id="@+id/measure_cell_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="3dp"
         tools:text="216 mg"
         android:textStyle="bold"
         android:textColor="@color/text_white"
         android:textSize="12sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/measure_cell_percent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        tools:text="87%"
+        android:textStyle="bold"
+        android:textColor="@color/text_white"
+        android:textSize="16sp"
         android:textAlignment="center"/>
 
 </LinearLayout>

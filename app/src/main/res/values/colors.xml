@@ -8,5 +8,12 @@
 
     <color name="text_black">#000000</color>
     <color name="text_white">#FFFFFF</color>
+    <color name="condition_very_good">#5ab151</color>
+    <color name="condition_good">#92d04f</color>
+    <color name="condition_ok">#bdb701</color>
+    <color name="condition_average">#d7a013</color>
+    <color name="condition_bad">#e93f33</color>
+    <color name="condition_very_bad">#c13229</color>
+    <color name="condition_not_available">#555555</color>
 
 </resources>

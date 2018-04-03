@@ -4,4 +4,5 @@
     <!-- COMMON -->
     <string name="common_no_data">No data available</string>
     <string name="common_error_try_later">An error occurred,\nplease try again later</string>
+    <string name="not_available">n/a</string>
 </resources>

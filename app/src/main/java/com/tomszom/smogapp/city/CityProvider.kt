@@ -25,7 +25,6 @@ class CityProvider : CityContract.Provider {
 
     private fun measuresFromSensor(sensor: Sensor): MeasureViewModel {
         val sensorData = getSensorData(sensor.id).toObservable().blockingFirst()
-
         return MeasureViewModel(sensor.param.paramFormula, sensorData.values)
     }
 
