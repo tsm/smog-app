@@ -31,7 +31,7 @@ class SelectPresenter : SelectContract.Presenter {
                 .doOnSubscribe { if (showProgress) view?.showLoading() }
                 .subscribe(
                         { list ->
-                            view?.showSelectionList(list)
+                            view?.showSelectionList(list.sortedBy { it.stationName })
                         },
                         { e ->
                             view?.showError()
