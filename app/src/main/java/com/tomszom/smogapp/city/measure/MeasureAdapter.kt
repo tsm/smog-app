@@ -19,8 +19,12 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
         val measure = measureList[position]
         holder.itemView.measure_cell_name.text = measure.name
-        val valueStr = measure.values.last().value.toString() + " " + measure.unit
-        holder.itemView.measure_cell_value.text = valueStr
+        if (measure.values.isEmpty()) {
+            holder.itemView.measure_cell_value.text = ""
+        } else {
+            val valueStr = measure.values.last().value.toString() + " " + measure.unit
+            holder.itemView.measure_cell_value.text = valueStr
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder =

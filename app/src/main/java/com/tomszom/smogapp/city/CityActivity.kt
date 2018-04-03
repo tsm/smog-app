@@ -6,16 +6,18 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.GridLayoutManager
 import android.view.MenuItem
 import com.tomszom.smogapp.R
 import com.tomszom.smogapp.city.measure.MeasureAdapter
 import com.tomszom.smogapp.city.measure.MeasureViewModel
 import com.tomszom.smogapp.model.Station
+import com.tomszom.smogapp.utils.ViewUtils
 import com.tomszom.smogapp.utils.gone
+import com.tomszom.smogapp.utils.view.GridSpacingItemDecoration
 import com.tomszom.smogapp.utils.visible
 import kotlinx.android.synthetic.main.city_activity.*
+
 
 /**
  * Created by tsm on 03/04/2018
@@ -55,17 +57,17 @@ class CityActivity : AppCompatActivity(), CityContract.View {
     private fun initToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.toolbarTranslucent)))
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(this, R.color.semiTranslucent)))
     }
 
     private fun initRecycler() {
-        val layoutManager = GridLayoutManager(this, 3)
-        city_measure_recycler.layoutManager = layoutManager
+        val spanCount = 3 // 3 columns
+        val spacing = ViewUtils.dpToPx(16f, this)
+        val includeEdge = true
 
         city_measure_recycler.adapter = measureAdapter
-
-        val dividerItemDecoration = DividerItemDecoration(this, layoutManager.orientation)
-        city_measure_recycler.addItemDecoration(dividerItemDecoration)
+        city_measure_recycler.layoutManager = GridLayoutManager(this, spanCount)
+        city_measure_recycler.addItemDecoration(GridSpacingItemDecoration(spanCount, spacing.toInt(), includeEdge))
     }
 
     private fun showStationInfo(station: Station) {

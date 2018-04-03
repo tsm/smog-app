@@ -1,6 +1,7 @@
 package com.tomszom.smogapp.network
 
 import com.tomszom.smogapp.model.Sensor
+import com.tomszom.smogapp.model.SensorData
 import com.tomszom.smogapp.model.Station
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -19,4 +20,7 @@ interface GiosAirQualityService {
 
     @GET("station/sensors/{stationId}")
     fun getSensors(@Path("stationId") stationId: String): Single<List<Sensor>>
+
+    @GET("data/getData/{sensorId}")
+    fun getSensorData(@Path("sensorId") sensorId: String): Single<SensorData>
 }

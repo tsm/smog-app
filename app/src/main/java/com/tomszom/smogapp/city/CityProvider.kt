@@ -1,29 +1,34 @@
 package com.tomszom.smogapp.city
 
 import com.tomszom.smogapp.city.measure.MeasureViewModel
+import com.tomszom.smogapp.model.Sensor
+import com.tomszom.smogapp.model.SensorData
+import com.tomszom.smogapp.network.NetworkRestAdapter
+import io.reactivex.Observable
 import io.reactivex.Single
 
 /**
  * Created by tsm on 03/04/2018
  */
 class CityProvider : CityContract.Provider {
+    private val airQualityService = NetworkRestAdapter().createGiosAirQualityService()
+
     override fun getMeasures(stationId: Long): Single<List<MeasureViewModel>> {
-        return Single.fromCallable { mockMeasures() }
+        return getSensors(stationId).flatMap {
+            Observable.fromIterable(it)
+                    .map(this::measuresFromSensor)
+                    .toList()
+        }
     }
 
-    private fun mockMeasures(): List<MeasureViewModel> {
-        val measureValues = ArrayList<MeasureViewModel.MeasureValue>()
+    private fun getSensors(stationId: Long): Single<List<Sensor>> = airQualityService.getSensors(stationId.toString())
 
-        measureValues.add(MeasureViewModel.MeasureValue(1.0, "2018-04-03 11:00:00"))
-        measureValues.add(MeasureViewModel.MeasureValue(2.0, "2018-04-03 12:00:00"))
+    private fun measuresFromSensor(sensor: Sensor): MeasureViewModel {
+        val sensorData = getSensorData(sensor.id).toObservable().blockingFirst()
 
-        val measures = ArrayList<MeasureViewModel>()
-        measures.add(MeasureViewModel("MOCK", measureValues, "mg"))
-        measures.add(MeasureViewModel("MOCK2", measureValues, "g"))
-        measures.add(MeasureViewModel("MOCK3", measureValues, "ml"))
-        measures.add(MeasureViewModel("MOCK4", measureValues))
-        measures.add(MeasureViewModel("MOCK5", measureValues, "pH"))
-
-        return measures
+        return MeasureViewModel(sensor.param.paramFormula, sensorData.values)
     }
+
+    private fun getSensorData(sensorId: Long): Single<SensorData> = airQualityService.getSensorData(sensorId.toString())
+
 }
