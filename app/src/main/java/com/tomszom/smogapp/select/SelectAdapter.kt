@@ -20,7 +20,7 @@ class SelectAdapter(private val itemClickListener: SelectClickListener) : Recycl
     override fun onBindViewHolder(holder: SelectViewHolder, position: Int) {
         val station = selectList[position]
         holder.itemView.select_row_title.text = station.stationName
-        holder.itemView.setOnClickListener { itemClickListener.selectionItemClicked(station.id) }
+        holder.itemView.setOnClickListener { itemClickListener.selectionItemClicked(station) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectViewHolder =
@@ -30,6 +30,6 @@ class SelectAdapter(private val itemClickListener: SelectClickListener) : Recycl
     class SelectViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     interface SelectClickListener {
-        fun selectionItemClicked(id: Long)
+        fun selectionItemClicked(station: Station)
     }
 }

@@ -83,12 +83,12 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
         }
     }
 
-    override fun selectionItemClicked(id: Long) {
-        startStationActivity(id)
+    override fun selectionItemClicked(station: Station) {
+        startCity(station)
     }
 
-    override fun startStationActivity(stationId: Long) {
-        Toast.makeText(this, "station id clicked $stationId", Toast.LENGTH_SHORT).show()
-        //TODO add StationActivity
+    override fun startCity(station: Station) {
+        Toast.makeText(this, "station id clicked ${station.id}", Toast.LENGTH_SHORT).show()
+        //TODO add CityActivity
     }
 }

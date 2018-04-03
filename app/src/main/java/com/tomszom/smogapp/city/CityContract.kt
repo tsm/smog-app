@@ -1,19 +1,17 @@
-package com.tomszom.smogapp.select
+package com.tomszom.smogapp.city
 
-import com.tomszom.smogapp.model.Station
+import com.tomszom.smogapp.model.Sensor
 import io.reactivex.Single
 
 /**
- * Created by tsm on 31/03/2018
+ * Created by tsm on 03/04/2018
  */
-interface SelectContract {
-
+interface CityContract {
     interface View {
         fun showLoading()
         fun showNoData()
         fun showError()
-        fun showSelectionList(selectionList: List<Station>)
-        fun startCity(station: Station)
+        fun showMeasurements(dataList: List<Sensor>)
     }
 
     interface Presenter {
@@ -23,6 +21,6 @@ interface SelectContract {
     }
 
     interface Provider {
-        fun getStations(): Single<List<Station>>
+        fun getMeasurements(): Single<List<Sensor>>
     }
 }
