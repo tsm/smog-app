@@ -98,6 +98,7 @@ class CityActivity : AppCompatActivity(), CityContract.View {
     }
 
     override fun showLoading() {
+        city_map_pin.gone()
         city_measure_recycler.gone()
         city_msg.gone()
         city_progress.visible()
@@ -119,6 +120,7 @@ class CityActivity : AppCompatActivity(), CityContract.View {
     }
 
     override fun showMeasures(measures: List<MeasureViewModel>) {
+        city_map_pin.visible()
         if (measures.isEmpty()) {
             showNoData()
         } else {
