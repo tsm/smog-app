@@ -10,13 +10,13 @@ import io.reactivex.disposables.Disposable
  */
 class SelectPresenter : SelectContract.Presenter {
     private var view: SelectContract.View? = null
+
     private val provider: SelectContract.Provider = SelectProvider() // TODO inject
     private var stationsDisposable: Disposable? = null
 
     override fun attach(view: SelectContract.View) {
         this.view = view
         refresh(true)
-
     }
 
     override fun detach() {
@@ -25,6 +25,7 @@ class SelectPresenter : SelectContract.Presenter {
     }
 
     override fun refresh(showProgress: Boolean) {
+        stationsDisposable.disposeIfNeeded()
         stationsDisposable = provider.getStations()
                 .applySchedulers()
                 .doOnSubscribe { if (showProgress) view?.showLoading() }

@@ -15,12 +15,13 @@ interface CityContract {
     }
 
     interface Presenter {
-        fun attach(view: View, stationId: Long)
+        fun attach(view: View)
         fun detach()
-        fun refresh(showProgress: Boolean)
+        fun selectStation(stationId: Long)
+        fun refresh()
     }
 
     interface Provider {
-        fun getMeasures(): Single<List<MeasureViewModel>>
+        fun getMeasures(stationId: Long): Single<List<MeasureViewModel>>
     }
 }
