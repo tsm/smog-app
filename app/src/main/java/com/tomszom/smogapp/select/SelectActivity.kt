@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
 import com.tomszom.smogapp.R
+import com.tomszom.smogapp.city.CityActivity
 import com.tomszom.smogapp.model.Station
 import com.tomszom.smogapp.utils.gone
 import com.tomszom.smogapp.utils.visible
@@ -88,7 +88,6 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
     }
 
     override fun startCity(station: Station) {
-        Toast.makeText(this, "station id clicked ${station.id}", Toast.LENGTH_SHORT).show()
-        //TODO add CityActivity
+        startActivity(CityActivity.createIntent(this, station))
     }
 }

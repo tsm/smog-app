@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/measure_cell_container"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              tools:layout_width="100dp"
+              android:layout_height="wrap_content"
+              android:background="@android:color/darker_gray"
+              android:paddingTop="16dp"
+              android:paddingBottom="16dp"
+              android:paddingStart="8dp"
+              android:paddingEnd="8dp">
+
+    <TextView
+        android:id="@+id/measure_cell_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="PM10"
+        android:lines="2"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/text_white"
+        android:textSize="16sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/measure_cell_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        tools:text="216 mg"
+        android:textStyle="bold"
+        android:textColor="@color/text_white"
+        android:textSize="12sp"
+        android:textAlignment="center"/>
+
+</LinearLayout>

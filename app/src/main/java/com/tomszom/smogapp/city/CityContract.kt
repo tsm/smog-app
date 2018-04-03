@@ -1,6 +1,6 @@
 package com.tomszom.smogapp.city
 
-import com.tomszom.smogapp.model.Sensor
+import com.tomszom.smogapp.city.measure.MeasureViewModel
 import io.reactivex.Single
 
 /**
@@ -11,16 +11,16 @@ interface CityContract {
         fun showLoading()
         fun showNoData()
         fun showError()
-        fun showMeasurements(dataList: List<Sensor>)
+        fun showMeasures(measures: List<MeasureViewModel>)
     }
 
     interface Presenter {
-        fun attach(view: View)
+        fun attach(view: View, stationId: Long)
         fun detach()
         fun refresh(showProgress: Boolean)
     }
 
     interface Provider {
-        fun getMeasurements(): Single<List<Sensor>>
+        fun getMeasures(): Single<List<MeasureViewModel>>
     }
 }
