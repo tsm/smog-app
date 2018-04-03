@@ -22,7 +22,7 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
         if (measure.values.isEmpty()) {
             holder.itemView.measure_cell_value.text = ""
         } else {
-            val valueStr = measure.values.last().value.toString() + " " + measure.unit
+            val valueStr = String.format("%.2f", measure.values.last().value) + " " + measure.unit
             holder.itemView.measure_cell_value.text = valueStr
         }
     }
