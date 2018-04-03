@@ -2,6 +2,8 @@ package com.tomszom.smogapp.select
 
 import com.tomszom.smogapp.BuildConfig
 import com.tomszom.smogapp.utils.applySchedulers
+import com.tomszom.smogapp.utils.disposeIfNeeded
+import io.reactivex.disposables.Disposable
 
 /**
  * Created by tsm on 31/03/2018
@@ -9,6 +11,7 @@ import com.tomszom.smogapp.utils.applySchedulers
 class SelectPresenter : SelectContract.Presenter {
     private var view: SelectContract.View? = null
     private val provider: SelectContract.Provider = SelectProvider() // TODO inject
+    private var stationsDisposable: Disposable? = null
 
     override fun attach(view: SelectContract.View) {
         this.view = view
@@ -17,11 +20,12 @@ class SelectPresenter : SelectContract.Presenter {
     }
 
     override fun detach() {
+        stationsDisposable.disposeIfNeeded()
         view = null
     }
 
     override fun refresh(showProgress: Boolean) {
-        provider.getStations()
+        stationsDisposable = provider.getStations()
                 .applySchedulers()
                 .doOnSubscribe { if (showProgress) view?.showLoading() }
                 .subscribe(
@@ -34,7 +38,7 @@ class SelectPresenter : SelectContract.Presenter {
                                 e.printStackTrace()
                             }
                         }
-                );
+                )
 
     }
 }

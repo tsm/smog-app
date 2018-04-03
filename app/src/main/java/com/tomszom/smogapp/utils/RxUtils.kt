@@ -10,9 +10,9 @@ import io.reactivex.schedulers.Schedulers
  * Created by tsm on 31/03/2018
  */
 
-fun unSubscribe(disposable: Disposable?) {
-    if (disposable != null && !disposable.isDisposed) {
-        disposable.dispose()
+fun Disposable?.disposeIfNeeded() {
+    if (this != null && !this.isDisposed) {
+        this.dispose()
     }
 }
 
