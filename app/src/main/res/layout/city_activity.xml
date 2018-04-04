@@ -18,7 +18,7 @@
         android:src="@drawable/ic_location_on_black_36dp"
         android:layout_gravity="center"
         android:paddingBottom="36dp"
-        android:tint="@color/colorPrimaryDark"
+        android:tint="@color/colorPrimary"
         android:visibility="gone"
         tools:visibility="visible"/>
 
