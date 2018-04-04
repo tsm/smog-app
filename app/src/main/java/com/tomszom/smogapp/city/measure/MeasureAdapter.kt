@@ -1,8 +1,6 @@
 package com.tomszom.smogapp.city.measure
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
+import android.animation.*
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -10,7 +8,6 @@ import android.view.ViewGroup
 import com.tomszom.smogapp.R
 import com.tomszom.smogapp.utils.inflate
 import kotlinx.android.synthetic.main.measure_cell.view.*
-
 
 /**
  * Created by tsm on 03/04/2018
@@ -44,8 +41,7 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
             holder.itemView.measure_cell_container.setBackgroundColor(
                     ContextCompat.getColor(holder.itemView.context, R.color.condition_not_available))
         } else {
-            //value *=5.0f //TODO remove, test only
-            if (value > 0.0) { // animation if there is some positive value
+            if (value > 0.0) { // animation if there is positive value
                 val valueAnim = ValueAnimator.ofFloat(0.0f, value.toFloat())
                 valueAnim.duration = 2500
 
@@ -53,12 +49,21 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
                     val animValue = (animation.animatedValue as Float)
                     holder.showValue(animValue.toDouble(), unit, part)
                 })
-                valueAnim.start()
+
                 valueAnim.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
+
+                        //show final value anyway (double to float conversion may cause error)
                         holder.showValue(value, unit, part)
+
+                        // if value is greater than last threshold show pulse animation
+                        if (part != null && value > part?.threshold5 ?: Double.MAX_VALUE) {
+                            holder.pulseAnimate()
+                        }
                     }
                 })
+
+                valueAnim.start()
             } else {
                 holder.showValue(value, unit, part)
             }
@@ -90,6 +95,19 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
             val valueStr = String.format("%.2f", value) + " " + unit
             itemView.measure_cell_value.text = valueStr
             itemView.measure_cell_percent.text = percent
+        }
+
+        fun pulseAnimate() {
+            val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+                    itemView,
+                    PropertyValuesHolder.ofFloat("scaleX", 1.1f),
+                    PropertyValuesHolder.ofFloat("scaleY", 1.1f))
+            scaleDown.duration = 500
+
+            scaleDown.repeatCount = ObjectAnimator.INFINITE
+            scaleDown.repeatMode = ObjectAnimator.REVERSE
+
+            scaleDown.start()
         }
     }
 
