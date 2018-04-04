@@ -1,5 +1,8 @@
 package com.tomszom.smogapp.city.measure
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -7,6 +10,7 @@ import android.view.ViewGroup
 import com.tomszom.smogapp.R
 import com.tomszom.smogapp.utils.inflate
 import kotlinx.android.synthetic.main.measure_cell.view.*
+
 
 /**
  * Created by tsm on 03/04/2018
@@ -20,18 +24,57 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
     override fun onBindViewHolder(holder: MeasureViewHolder, position: Int) {
         val measure = measureList[position]
 
-        val value = if (measure.values.isEmpty()) null else measure.values.last().value
+        var value = if (measure.values.isEmpty()) null else measure.values.last().value
 
-        var color: Int = R.color.condition_not_available
         var name = measure.name
         var unit = measure.unit
-        var percent = ""
+        var part: MeasureParticle? = null
         try {
-            val part = MeasureParticle.valueOf(measure.name.toUpperCase().replace(".", ""))
-
+            part = MeasureParticle.valueOf(measure.name.toUpperCase().replace(".", ""))
             name = part.formula
             unit = part.unit
-            if (value != null) {
+        } catch (ignore: IllegalArgumentException) {
+        }
+
+        holder.itemView.measure_cell_name.text = name
+
+        if (value == null || value < 0) { //not available
+            holder.itemView.measure_cell_value.setText(R.string.not_available)
+            holder.itemView.measure_cell_percent.text = ""
+            holder.itemView.measure_cell_container.setBackgroundColor(
+                    ContextCompat.getColor(holder.itemView.context, R.color.condition_not_available))
+        } else {
+            //value *=5.0f //TODO remove, test only
+            if (value > 0.0) { // animation if there is some positive value
+                val valueAnim = ValueAnimator.ofFloat(0.0f, value.toFloat())
+                valueAnim.duration = 2500
+
+                valueAnim.addUpdateListener({ animation ->
+                    val animValue = (animation.animatedValue as Float)
+                    holder.showValue(animValue.toDouble(), unit, part)
+                })
+                valueAnim.start()
+                valueAnim.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        holder.showValue(value, unit, part)
+                    }
+                })
+            } else {
+                holder.showValue(value, unit, part)
+            }
+        }
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder =
+            MeasureViewHolder(parent.context.inflate(R.layout.measure_cell, parent))
+
+
+    class MeasureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun showValue(value: Double, unit: String, part: MeasureParticle? = null) {
+            var color: Int = R.color.condition_not_available
+            var percent = ""
+            if (part != null) {
                 when (value) {
                     in (0.0..part.threshold1) -> color = R.color.condition_very_good
                     in (part.threshold1..part.threshold2) -> color = R.color.condition_good
@@ -43,26 +86,11 @@ class MeasureAdapter : RecyclerView.Adapter<MeasureAdapter.MeasureViewHolder>() 
                 percent = String.format("%.0f", value / part.threshold5 * 100.0) + "%"
             }
 
-        } catch (ignore: IllegalArgumentException) {
-        }
-
-        holder.itemView.measure_cell_name.text = name
-        holder.itemView.measure_cell_container.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, color))
-        if (value == null || value < 0) {
-            holder.itemView.measure_cell_value.setText(R.string.not_available)
-            holder.itemView.measure_cell_percent.text = ""
-        } else {
+            itemView.measure_cell_container.setBackgroundColor(ContextCompat.getColor(itemView.context, color))
             val valueStr = String.format("%.2f", value) + " " + unit
-            holder.itemView.measure_cell_value.text = valueStr
-            holder.itemView.measure_cell_percent.text = percent
+            itemView.measure_cell_value.text = valueStr
+            itemView.measure_cell_percent.text = percent
         }
-
     }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeasureViewHolder =
-            MeasureViewHolder(parent.context.inflate(R.layout.measure_cell, parent))
-
-
-    class MeasureViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.util.DisplayMetrics
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -141,6 +142,8 @@ class CityActivity : AppCompatActivity(), CityContract.View {
 
     private fun showMapPinWithAnimation() {
         city_map_pin.visible()
+        city_map_pin.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        city_map_pin.isDrawingCacheEnabled = true
         val jumpInAnimation = AnimationUtils.loadAnimation(this, R.anim.jump_in)
         city_map_pin.startAnimation(jumpInAnimation)
     }

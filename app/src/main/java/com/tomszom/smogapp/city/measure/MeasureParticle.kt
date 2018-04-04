@@ -3,13 +3,13 @@ package com.tomszom.smogapp.city.measure
 /**
  * Created by tsm on 03/04/2018
  */
-internal enum class MeasureParticle constructor(val formula: String,
-                                                val unit: String,
-                                                val threshold1: Double,
-                                                val threshold2: Double,
-                                                val threshold3: Double,
-                                                val threshold4: Double,
-                                                val threshold5: Double
+enum class MeasureParticle constructor(val formula: String,
+                                       val unit: String,
+                                       val threshold1: Double,
+                                       val threshold2: Double,
+                                       val threshold3: Double,
+                                       val threshold4: Double,
+                                       val threshold5: Double
 ) {
 
     SO2("SO2", "μg/m3", 50.0, 100.0, 200.0, 350.0, 500.0),
