@@ -25,7 +25,7 @@ class CityProvider : CityContract.Provider {
 
     private fun measuresFromSensor(sensor: Sensor): MeasureViewModel {
         val sensorData = getSensorData(sensor.id).toObservable().blockingFirst()
-        return MeasureViewModel(sensor.param.paramFormula, sensorData.values)
+        return MeasureViewModel(sensor.param.paramFormula, sensorData.values.filter { it.value != null }.sortedBy { it.date })
     }
 
     private fun getSensorData(sensorId: Long): Single<SensorData> = airQualityService.getSensorData(sensorId.toString())

@@ -65,7 +65,7 @@ class CityActivity : AppCompatActivity(), CityContract.View {
 
     private fun initRecycler() {
         val spanCount = resources.getInteger(R.integer.measures_in_row)
-        val spacing = ViewUtils.dpToPx(16f, this)
+        val spacing = ViewUtils.dpToPx(14f, this)
         val includeEdge = true
 
         city_measure_recycler.adapter = measureAdapter

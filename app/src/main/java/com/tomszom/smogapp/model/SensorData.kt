@@ -5,5 +5,5 @@ package com.tomszom.smogapp.model
  */
 data class SensorData(val key: String, val values: List<MeasureValue>) {
 
-    data class MeasureValue(val value: Double, val date: String)
+    data class MeasureValue(val value: Double?, val date: String)
 }

@@ -9,8 +9,8 @@
               android:background="@android:color/darker_gray"
               android:paddingTop="16dp"
               android:paddingBottom="16dp"
-              android:paddingStart="8dp"
-              android:paddingEnd="8dp">
+              android:paddingStart="4dp"
+              android:paddingEnd="4dp">
 
     <TextView
         android:id="@+id/measure_cell_name"
