@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.util.DisplayMetrics
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.tomszom.smogapp.R
@@ -120,7 +121,7 @@ class CityActivity : AppCompatActivity(), CityContract.View {
     }
 
     override fun showMeasures(measures: List<MeasureViewModel>) {
-        city_map_pin.visible()
+        showMapPinWithAnimation()
         if (measures.isEmpty()) {
             showNoData()
         } else {
@@ -136,5 +137,11 @@ class CityActivity : AppCompatActivity(), CityContract.View {
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
+    private fun showMapPinWithAnimation() {
+        city_map_pin.visible()
+        val jumpInAnimation = AnimationUtils.loadAnimation(this, R.anim.jump_in)
+        city_map_pin.startAnimation(jumpInAnimation)
     }
 }
