@@ -89,5 +89,6 @@ class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.S
 
     override fun startCity(station: Station) {
         startActivity(CityActivity.createIntent(this, station))
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }
