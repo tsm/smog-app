@@ -10,11 +10,16 @@ import com.tomszom.smogapp.model.Station
 import com.tomszom.smogapp.utils.gone
 import com.tomszom.smogapp.utils.visible
 import kotlinx.android.synthetic.main.select_activity.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.instance
 
 
-class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.SelectClickListener {
+class SelectActivity : AppCompatActivity(), SelectContract.View, SelectAdapter.SelectClickListener, KodeinAware {
 
-    private val presenter: SelectContract.Presenter = SelectPresenter() //TODO inject
+    override val kodein by closestKodein()
+
+    private val presenter: SelectContract.Presenter by instance()
 
     private val selectAdapter = SelectAdapter(this)
 
